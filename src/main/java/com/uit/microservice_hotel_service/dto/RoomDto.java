@@ -12,8 +12,8 @@ public class RoomDto {
 
     private String roomType;
     private Double pricePerNight;
-   // private UUID reserveByUserId;
+    private UUID reserveByUserId;
     private boolean status=false;
-    //private UUID propertyId;
+    private UUID propertyId;
 
 }
