@@ -2,7 +2,6 @@ package com.uit.microservice_hotel_service.service;
 
 import com.uit.microservice_hotel_service.controller.reponsitory.RoomRepository;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
-import com.uit.microservice_hotel_service.dto.DeleteRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.entities.Room;
 import lombok.AllArgsConstructor;
@@ -11,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -35,11 +36,23 @@ public class RoomServiceImpl implements RoomService {
         return mapper.map(newRoom, RoomDto.class);
     }
 
-    @Override
-    public boolean deleteRoom(DeleteRoomDto ID) {
-        roomRepository.deleteById(ID.getId());
 
+    @Override
+    public boolean deleteRoom(UUID ID) {
+        roomRepository.deleteById(ID);
         return true;
+    }
+
+    public List<Room> getAllRooms(){
+        List<Room> rooms = new ArrayList<Room>();
+        roomRepository.findAll().forEach(room -> rooms.add(room));
+        return rooms;
+    }
+
+    //public RoomDto
+
+    public Room getRoomById(UUID id) {
+        return roomRepository.findById(id).get();
     }
 
 
