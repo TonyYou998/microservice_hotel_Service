@@ -5,14 +5,17 @@ import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.entities.Room;
 import lombok.AllArgsConstructor;
+import net.bytebuddy.asm.Advice;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -36,6 +39,14 @@ public class RoomServiceImpl implements RoomService {
         return mapper.map(newRoom, RoomDto.class);
     }
 
+    @Override
+    public RoomDto editRoom(Room room) {
+
+       roomRepository.save(room);
+
+        return mapper.map(room, RoomDto.class);
+    }
+
 
     @Override
     public boolean deleteRoom(UUID ID) {
@@ -43,17 +54,25 @@ public class RoomServiceImpl implements RoomService {
         return true;
     }
 
-    public List<Room> getAllRooms(){
+    public  List<RoomDto> getAllRooms(){
+
         List<Room> rooms = new ArrayList<Room>();
+
         roomRepository.findAll().forEach(room -> rooms.add(room));
-        return rooms;
+
+        List<RoomDto> roomDtos = rooms
+                .stream()
+                .map(user -> mapper.map(user, RoomDto.class))
+                .collect(Collectors.toList());
+        return roomDtos;
     }
 
     //public RoomDto
-
-    public Room getRoomById(UUID id) {
-        return roomRepository.findById(id).get();
+    public RoomDto getRoomById(UUID id) {
+      return   mapper.map( roomRepository.findById(id).get(), RoomDto.class);
     }
+
+
 
 
 }

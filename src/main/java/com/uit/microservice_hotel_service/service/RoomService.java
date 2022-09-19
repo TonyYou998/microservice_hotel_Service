@@ -12,8 +12,8 @@ public interface RoomService {
 
     boolean deleteRoom(UUID dto);
 
-     List<Room> getAllRooms();
+     List<RoomDto> getAllRooms();
+     RoomDto getRoomById(UUID id);
 
-     Room getRoomById(UUID id);
-
+    RoomDto editRoom(Room dto);
 }

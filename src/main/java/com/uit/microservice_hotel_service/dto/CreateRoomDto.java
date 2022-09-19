@@ -11,14 +11,14 @@ import java.util.UUID;
 @Setter
 public class CreateRoomDto {
 
-    @NotEmpty
+
     private String roomType;
-    @NotEmpty
+
     private Double pricePerNight;
-    @NotEmpty
+
     private UUID reserveByUserId;
-    @NotEmpty
-    private boolean status=false;
-    @NotEmpty
+
+    private boolean status;
+
     private UUID propertyId;
 }

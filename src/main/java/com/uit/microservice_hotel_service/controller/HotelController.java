@@ -25,13 +25,12 @@ public class HotelController {
    }
 
     @GetMapping(HotelConstant.get_all_room)
-    public List<Room> getAllRoom(){
+    public List<RoomDto> getAllRoom(){
       try{  return roomService.getAllRooms();} catch (Exception e) {return null;}
     }
     @GetMapping(HotelConstant.get_a_room)
-    public Room getRoom(@PathVariable("id") UUID id) {
+    public RoomDto getRoom(@PathVariable("id") UUID id) {
         try{return roomService.getRoomById(id);} catch (Exception e) {return null;}
-
     }
 
     @PostMapping(HotelConstant.create_a_room)
@@ -42,13 +41,14 @@ public class HotelController {
       return roomService.creataRoom(dto);
    }
 
-//    @PutMapping(HotelConstant.edit_a_room)
-//    public Object editRoom(@Valid @RequestBody CreateRoomDto dto, BindingResult result) {
-//        if(result.hasErrors()){
-//            return HotelConstant.ERROR;
-//        }
-//         roomService.creataRoom(dto);
-//    }
+    @PutMapping(HotelConstant.edit_a_room)
+    public Object editRoom(@Valid @RequestBody Room room , BindingResult result) {
+        if(result.hasErrors()){
+            return HotelConstant.ERROR;
+        }
+        return roomService.editRoom(room);
+    }
+
     @DeleteMapping(HotelConstant.delete_a_room)
     public boolean deleteEmployee(@PathVariable("id") UUID id) {
         try {
