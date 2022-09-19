@@ -15,6 +15,6 @@ public class HotelConstant extends BaseConstant {
 
     public static final String get_a_room="/get/get-a-room/{id}";
 
-    public static final String edit_a_room="/edit/edit-a-room/{id}";
+    public static final String edit_a_room="/edit/edit-a-room";
 
 }

@@ -12,8 +12,8 @@ import java.util.UUID;
 public class RoomDto {
 
     private UUID id;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    //private LocalDateTime createAt;
+    //private LocalDateTime updateAt;
     private String roomType;
     private Double pricePerNight;
     private UUID reserveByUserId;

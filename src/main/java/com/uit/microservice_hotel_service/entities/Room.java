@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -16,5 +17,7 @@ public class Room extends BaseEntity {
     private UUID reserveByUserId;
     private boolean status=false;
     private UUID propertyId;
+//    private LocalDateTime createAt;
+//    private LocalDateTime updateAt;
 
 }

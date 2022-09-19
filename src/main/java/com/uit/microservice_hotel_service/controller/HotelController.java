@@ -1,6 +1,7 @@
 package com.uit.microservice_hotel_service.controller;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.common.HotelConstant;
+import com.uit.microservice_hotel_service.dto.EdiRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.entities.Room;
 import com.uit.microservice_hotel_service.service.RoomService;
@@ -42,11 +43,11 @@ public class HotelController {
    }
 
     @PutMapping(HotelConstant.edit_a_room)
-    public Object editRoom(@Valid @RequestBody Room room , BindingResult result) {
+    public Object editRoom(@Valid @RequestBody EdiRoomDto dto , BindingResult result) {
         if(result.hasErrors()){
             return HotelConstant.ERROR;
         }
-        return roomService.editRoom(room);
+        return roomService.editRoom(dto);
     }
 
     @DeleteMapping(HotelConstant.delete_a_room)

@@ -2,6 +2,7 @@ package com.uit.microservice_hotel_service.service;
 
 import com.uit.microservice_hotel_service.controller.reponsitory.RoomRepository;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
+import com.uit.microservice_hotel_service.dto.EdiRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.entities.Room;
 import lombok.AllArgsConstructor;
@@ -40,11 +41,19 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomDto editRoom(Room room) {
+    public RoomDto editRoom(EdiRoomDto dto) {
 
-       roomRepository.save(room);
-
-        return mapper.map(room, RoomDto.class);
+        Room editRoom = new Room();
+        editRoom.setId(dto.getId());
+        editRoom.setRoomType(dto.getRoomType());
+        editRoom.setPricePerNight(dto.getPricePerNight());
+        editRoom.setStatus(dto.isStatus());
+        try{
+            roomRepository.save(editRoom);
+        } catch (Exception e){
+            LOGGER.info(e.getCause().getMessage());
+        }
+        return mapper.map(editRoom, RoomDto.class);
     }
 
 
