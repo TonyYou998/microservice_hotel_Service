@@ -12,9 +12,9 @@ import java.util.UUID;
 @Setter
 public class CreateRoomDto {
 
-
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private int bedRoomCount;
+    private int bathRoomCount;
+    private int bedCount;
     private String roomType;
     private Double pricePerNight;
     private UUID reserveByUserId;

@@ -34,6 +34,7 @@ public class HotelController {
         try{return roomService.getRoomById(id);} catch (Exception e) {return null;}
     }
 
+    @CrossOrigin
     @PostMapping(HotelConstant.create_a_room)
     public Object createRoom(@Valid @RequestBody CreateRoomDto dto, BindingResult result) {
        if(result.hasErrors()){

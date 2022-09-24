@@ -14,8 +14,9 @@ public class EdiRoomDto {
 
 
     private UUID id;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private int bedRoomCount;
+    private int bathRoomCount;
+    private int bedCount;
     private String roomType;
     private Double pricePerNight;
     private UUID reserveByUserId;

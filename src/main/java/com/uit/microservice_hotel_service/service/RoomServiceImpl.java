@@ -31,6 +31,9 @@ public class RoomServiceImpl implements RoomService {
         Room newRoom = new Room();
         newRoom.setRoomType(dto.getRoomType());
         newRoom.setPricePerNight(dto.getPricePerNight());
+        newRoom.setBedRoomCount(dto.getBedRoomCount());
+        newRoom.setBathRoomCount(dto.getBathRoomCount());
+        newRoom.setBedCount(dto.getBedCount());
         newRoom.setStatus(dto.isStatus());
         try{
             roomRepository.save(newRoom);
@@ -42,9 +45,11 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDto editRoom(EdiRoomDto dto) {
-
         Room editRoom = new Room();
         editRoom.setId(dto.getId());
+        editRoom.setBedRoomCount(dto.getBedRoomCount());
+        editRoom.setBathRoomCount(dto.getBathRoomCount());
+        editRoom.setBedCount(dto.getBedCount());
         editRoom.setRoomType(dto.getRoomType());
         editRoom.setPricePerNight(dto.getPricePerNight());
         editRoom.setStatus(dto.isStatus());
@@ -80,8 +85,4 @@ public class RoomServiceImpl implements RoomService {
     public RoomDto getRoomById(UUID id) {
       return   mapper.map( roomRepository.findById(id).get(), RoomDto.class);
     }
-
-
-
-
 }

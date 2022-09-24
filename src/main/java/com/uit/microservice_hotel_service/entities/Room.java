@@ -12,12 +12,12 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Room extends BaseEntity {
+    private int bedRoomCount;
+    private int bathRoomCount;
+    private int bedCount;
     private String roomType;
     private Double pricePerNight;
     private UUID reserveByUserId;
     private boolean status=false;
     private UUID propertyId;
-//    private LocalDateTime createAt;
-//    private LocalDateTime updateAt;
-
 }
