@@ -11,8 +11,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class EdiRoomDto {
-
-
     private UUID id;
     private int bedRoomCount;
     private int bathRoomCount;
@@ -22,6 +20,4 @@ public class EdiRoomDto {
     private UUID reserveByUserId;
     private boolean status;
     private UUID propertyId;
-
-
 }
