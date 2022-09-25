@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(HotelConstant.BASE_URL)
 public class HotelController {
-    @GetMapping(HotelConstant.become_a_host)
-   public Object becomeHost(){
 
-        return null;
-   }
    @GetMapping(HotelConstant.demo)
    public Object demo(){
         return "hotel Demo";
