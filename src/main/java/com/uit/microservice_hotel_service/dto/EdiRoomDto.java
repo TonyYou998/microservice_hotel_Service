@@ -1,23 +1,23 @@
-package com.uit.microservice_hotel_service.entities;
+package com.uit.microservice_hotel_service.dto;
 
-import com.uit.user_service.entities.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
-public class Room extends BaseEntity {
+public class EdiRoomDto {
+    private UUID id;
     private int bedRoomCount;
     private int bathRoomCount;
     private int bedCount;
     private String roomType;
     private Double pricePerNight;
     private UUID reserveByUserId;
-    private boolean status=false;
+    private boolean status;
     private UUID propertyId;
 }
