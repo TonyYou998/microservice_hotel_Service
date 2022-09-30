@@ -44,9 +44,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomDto editRoom(EdiRoomDto dto) {
-        Room editRoom = roomRepository.findById(dto.getId()).get();
-
+    public RoomDto editRoom(EdiRoomDto dto, UUID id) {
+        Room editRoom = roomRepository.findById(id).get();
         editRoom.setBedRoomCount(dto.getBedRoomCount());
         editRoom.setBathRoomCount(dto.getBathRoomCount());
         editRoom.setBedCount(dto.getBedCount());
@@ -72,15 +71,13 @@ public class RoomServiceImpl implements RoomService {
 
         List<Room> rooms = new ArrayList<Room>();
 
-
-           rooms=roomRepository.findAll();
+        roomRepository.findAll().forEach(room -> rooms.add(room));
 
         List<RoomDto> roomDtos = rooms
                 .stream()
                 .map(user -> mapper.map(user, RoomDto.class))
                 .collect(Collectors.toList());
         return roomDtos;
-        
     }
 
     //public RoomDto

@@ -43,16 +43,16 @@ public class HotelController {
       return roomService.creataRoom(dto);
    }
 
+    @CrossOrigin
     @PutMapping(HotelConstant.edit_a_room)
-    public Object editRoom(@Valid @RequestBody EdiRoomDto dto , BindingResult result) {
+    public Object editRoom(@Valid @RequestBody EdiRoomDto dto,BindingResult result, @PathVariable("id") UUID id) {
         if(result.hasErrors()){
-            return HotelConstant.ERROR;
         }
-        return roomService.editRoom(dto);
+        return roomService.editRoom(dto,id);
     }
 
     @DeleteMapping(HotelConstant.delete_a_room)
-    public boolean deleteEmployee(@PathVariable("id") UUID id) {
+    public boolean deleteRoom(@PathVariable("id") UUID id) {
         try {
             roomService.deleteRoom(id);
             return true;
