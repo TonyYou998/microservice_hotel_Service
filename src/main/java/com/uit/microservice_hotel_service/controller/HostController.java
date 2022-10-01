@@ -1,9 +1,9 @@
 package com.uit.microservice_hotel_service.controller;
+import com.uit.microservice_base_project.common.BaseConstant;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.common.HotelConstant;
 import com.uit.microservice_hotel_service.dto.EdiRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
-import com.uit.microservice_hotel_service.entities.Room;
 import com.uit.microservice_hotel_service.service.RoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -14,16 +14,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(HotelConstant.BASE_URL)
+@RequestMapping(BaseConstant.BASE_URL+HotelConstant.SERVICE_NAME)
 @AllArgsConstructor
-public class HotelController {
+public class HostController {
 
     private RoomService roomService;
-    @GetMapping(HotelConstant.become_a_host)
-   public Object becomeHost(){
-
-        return null;
-   }
 
     @GetMapping(HotelConstant.get_all_room)
     public List<RoomDto> getAllRoom(){
@@ -63,5 +58,11 @@ public class HotelController {
    @GetMapping(HotelConstant.demo)
    public Object demo(){
         return "hotel Demo";
+   }
+
+   @PostMapping(HotelConstant.BECOME_A_HOST)
+   public Object becomeAHost(){
+
+        return "host";
    }
 }
