@@ -1,10 +1,10 @@
 package com.uit.microservice_hotel_service.controller;
 import com.uit.microservice_base_project.common.BaseConstant;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
-import com.uit.microservice_hotel_service.common.HotelConstant;
+import com.uit.microservice_hotel_service.common.HostConstant;
 import com.uit.microservice_hotel_service.dto.EdiRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
-import com.uit.microservice_hotel_service.service.RoomService;
+import com.uit.microservice_hotel_service.service.HostService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,55 +14,59 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(BaseConstant.BASE_URL+HotelConstant.SERVICE_NAME)
+@RequestMapping(BaseConstant.BASE_URL+ HostConstant.SERVICE_NAME)
 @AllArgsConstructor
 public class HostController {
+    private final String ROLE_HEADER="Role";
+    private final String UUID_HEADER="UUID";
+    private HostService hostService;
 
-    private RoomService roomService;
 
-    @GetMapping(HotelConstant.get_all_room)
+    @GetMapping(HostConstant.get_all_room)
     public List<RoomDto> getAllRoom(){
-      try{  return roomService.getAllRooms();} catch (Exception e) {return null;}
+      try{  return hostService.getAllRooms();} catch (Exception e) {return null;}
     }
-    @GetMapping(HotelConstant.get_a_room)
+    @GetMapping(HostConstant.get_a_room)
     public RoomDto getRoom(@PathVariable("id") UUID id) {
-        try{return roomService.getRoomById(id);} catch (Exception e) {return null;}
+        try{return hostService.getRoomById(id);} catch (Exception e) {return null;}
     }
 
     @CrossOrigin
-    @PostMapping(HotelConstant.create_a_room)
+    @PostMapping(HostConstant.create_a_room)
     public Object createRoom(@Valid @RequestBody CreateRoomDto dto, BindingResult result) {
        if(result.hasErrors()){
-           return HotelConstant.ERROR;
+           return HostConstant.ERROR;
        }
-      return roomService.creataRoom(dto);
+      return hostService.creataRoom(dto);
    }
 
     @CrossOrigin
-    @PutMapping(HotelConstant.edit_a_room)
+    @PutMapping(HostConstant.edit_a_room)
     public Object editRoom(@Valid @RequestBody EdiRoomDto dto,BindingResult result, @PathVariable("id") UUID id) {
         if(result.hasErrors()){
         }
-        return roomService.editRoom(dto,id);
+        return hostService.editRoom(dto,id);
     }
 
-    @DeleteMapping(HotelConstant.delete_a_room)
+    @DeleteMapping(HostConstant.delete_a_room)
     public boolean deleteRoom(@PathVariable("id") UUID id) {
         try {
-            roomService.deleteRoom(id);
+            hostService.deleteRoom(id);
             return true;
         }catch (Exception e) {  return false; }
     }
 
 
-   @GetMapping(HotelConstant.demo)
+   @GetMapping(HostConstant.demo)
    public Object demo(){
         return "hotel Demo";
    }
 
-   @PostMapping(HotelConstant.BECOME_A_HOST)
-   public Object becomeAHost(){
+   @PostMapping(HostConstant.BECOME_A_HOST)
+   public Object becomeAHost(@RequestHeader(ROLE_HEADER) String role,@RequestHeader(UUID_HEADER) String uuid){
+        if(!role.equals("User")&& !uuid.equals(""))
+            return HostConstant.ERROR;
+        return hostService.becomeAHost(uuid);
 
-        return "host";
    }
 }
