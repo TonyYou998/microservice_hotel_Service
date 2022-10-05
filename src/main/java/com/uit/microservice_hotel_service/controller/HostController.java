@@ -3,6 +3,7 @@ import com.uit.microservice_base_project.common.BaseConstant;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.common.HostConstant;
 import com.uit.microservice_hotel_service.dto.EdiRoomDto;
+import com.uit.microservice_hotel_service.dto.PropertyDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.service.HostService;
 import lombok.AllArgsConstructor;
@@ -68,5 +69,12 @@ public class HostController {
             return HostConstant.ERROR;
         return hostService.becomeAHost(uuid);
 
+   }
+
+   @PostMapping(HostConstant.ADD_PROPERTY)
+   public Object addProperty(@RequestHeader(ROLE_HEADER) String role, @RequestBody PropertyDto dto){
+            if(!role.equals("Host"))
+                return  HostConstant.ERROR;
+            return   hostService.addProperty(dto);
    }
 }
