@@ -1,6 +1,7 @@
 package com.uit.microservice_hotel_service.service;
 
-import com.uit.microservice_hotel_service.dto.PropertyDto;
+import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
+
 import com.uit.microservice_hotel_service.entities.Property;
 import com.uit.microservice_hotel_service.repository.PropertyRepository;
 import com.uit.microservice_hotel_service.repository.RoomRepository;
@@ -74,15 +75,21 @@ public class HostServiceImpl implements HostService {
     }
 
     @Override
-    public PropertyDto addProperty(PropertyDto dto) {
+    public CreatePropertyDto addProperty(CreatePropertyDto dto) {
         Property p=new Property();
         p.setPropertyName(dto.getPropertyName());
         p.setAddress(dto.getAddress());
         p.setDescription(dto.getDescription());
         p.setImages(dto.getImages());
-        propertyRepository.save(p);
+        try{
+            propertyRepository.save(p);
+        }
+       catch (Exception e){
+            LOGGER.info(e.getMessage());
+       }
 
-        return mapper.map(p,PropertyDto.class);
+
+        return mapper.map(p,CreatePropertyDto.class);
     }
 
 

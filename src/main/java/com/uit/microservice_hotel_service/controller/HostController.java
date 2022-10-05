@@ -1,9 +1,9 @@
 package com.uit.microservice_hotel_service.controller;
 import com.uit.microservice_base_project.common.BaseConstant;
+import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.common.HostConstant;
 import com.uit.microservice_hotel_service.dto.EdiRoomDto;
-import com.uit.microservice_hotel_service.dto.PropertyDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.service.HostService;
 import lombok.AllArgsConstructor;
@@ -72,9 +72,12 @@ public class HostController {
    }
 
    @PostMapping(HostConstant.ADD_PROPERTY)
-   public Object addProperty(@RequestHeader(ROLE_HEADER) String role, @RequestBody PropertyDto dto){
+   public Object addProperty(@RequestHeader(ROLE_HEADER) String role,@Valid @RequestBody CreatePropertyDto dto,BindingResult result){
+
             if(!role.equals("Host"))
                 return  HostConstant.ERROR;
+       if(result.hasErrors())
+           return HostConstant.ERROR;
             return   hostService.addProperty(dto);
    }
 }

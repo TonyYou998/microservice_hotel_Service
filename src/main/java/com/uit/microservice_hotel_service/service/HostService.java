@@ -1,8 +1,9 @@
 package com.uit.microservice_hotel_service.service;
 
+import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.dto.EdiRoomDto;
-import com.uit.microservice_hotel_service.dto.PropertyDto;
+
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.user_service.dto.UserDto;
 
@@ -18,5 +19,5 @@ public interface HostService {
 
     UserDto becomeAHost(String uuid);
 
-    PropertyDto addProperty(PropertyDto dto);
+    CreatePropertyDto addProperty(CreatePropertyDto dto);
 }
