@@ -1,5 +1,6 @@
 package com.uit.microservice_hotel_service.controller;
 import com.uit.microservice_base_project.common.BaseConstant;
+import com.uit.microservice_base_project.config.ResponseHandler;
 import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.common.HostConstant;
@@ -7,6 +8,8 @@ import com.uit.microservice_hotel_service.dto.EdiRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.service.HostService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,12 +75,11 @@ public class HostController {
    }
 
    @PostMapping(HostConstant.ADD_PROPERTY)
-   public Object addProperty(@RequestHeader(ROLE_HEADER) String role,@Valid @RequestBody CreatePropertyDto dto,BindingResult result){
-
-            if(!role.equals("Host"))
-                return  HostConstant.ERROR;
+   public Object addProperty(@RequestHeader(ROLE_HEADER) String role, @Valid @RequestBody CreatePropertyDto dto, BindingResult result){
+        if(!role.equals("Host"))
+            return ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
        if(result.hasErrors())
-           return HostConstant.ERROR;
-            return   hostService.addProperty(dto);
+           return ResponseHandler.getResponse(result,HttpStatus.BAD_REQUEST);
+       return   ResponseHandler.getResponse(hostService.addProperty(dto),HttpStatus.OK);
    }
 }
