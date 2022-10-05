@@ -8,6 +8,8 @@ import com.uit.microservice_hotel_service.dto.EdiRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.service.HostService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,6 +26,7 @@ public class HostController {
     private final String ROLE_HEADER="Role";
     private final String UUID_HEADER="UUID";
     private HostService hostService;
+    private static final Logger LOGGER= LoggerFactory.getLogger(HostController.class);
 
 
     @GetMapping(HostConstant.get_all_room)
@@ -31,25 +34,31 @@ public class HostController {
       try{  return hostService.getAllRooms();} catch (Exception e) {return null;}
     }
     @GetMapping(HostConstant.get_a_room)
-    public RoomDto getRoom(@PathVariable("id") UUID id) {
-        try{return hostService.getRoomById(id);} catch (Exception e) {return null;}
+    public Object getRoom(@PathVariable("id") UUID id) {
+        try{
+            return ResponseHandler.getResponse(hostService.getRoomById(id),HttpStatus.OK);
+        } catch (Exception e) {
+            LOGGER.info(e.getMessage());
+            return ResponseHandler.getResponse(HttpStatus.REQUEST_TIMEOUT);
+        }
     }
 
-    @CrossOrigin
+
     @PostMapping(HostConstant.create_a_room)
     public Object createRoom(@Valid @RequestBody CreateRoomDto dto, BindingResult result) {
        if(result.hasErrors()){
-           return HostConstant.ERROR;
+           return ResponseHandler.getResponse(result,HttpStatus.BAD_REQUEST);
        }
-      return hostService.creataRoom(dto);
+      return ResponseHandler.getResponse(hostService.creataRoom(dto),HttpStatus.OK);
    }
 
-    @CrossOrigin
+
     @PutMapping(HostConstant.edit_a_room)
     public Object editRoom(@Valid @RequestBody EdiRoomDto dto,BindingResult result, @PathVariable("id") UUID id) {
         if(result.hasErrors()){
+            return ResponseHandler.getResponse(result,HttpStatus.BAD_REQUEST);
         }
-        return hostService.editRoom(dto,id);
+        return ResponseHandler.getResponse(hostService.editRoom(dto,id),HttpStatus.OK);
     }
 
     @DeleteMapping(HostConstant.delete_a_room)
@@ -69,8 +78,8 @@ public class HostController {
    @PostMapping(HostConstant.BECOME_A_HOST)
    public Object becomeAHost(@RequestHeader(ROLE_HEADER) String role,@RequestHeader(UUID_HEADER) String uuid){
         if(!role.equals("User")&& !uuid.equals(""))
-            return HostConstant.ERROR;
-        return hostService.becomeAHost(uuid);
+            return ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
+        return ResponseHandler.getResponse(hostService.becomeAHost(uuid),HttpStatus.OK);
 
    }
 
