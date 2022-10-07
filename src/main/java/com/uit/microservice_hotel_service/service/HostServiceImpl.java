@@ -1,6 +1,10 @@
 package com.uit.microservice_hotel_service.service;
 
-import com.uit.microservice_hotel_service.repository.HostRepository;
+import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
+
+import com.uit.microservice_hotel_service.entities.Property;
+import com.uit.microservice_hotel_service.repository.PropertyRepository;
+import com.uit.microservice_hotel_service.repository.RoomRepository;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.dto.EdiRoomDto;
 import com.uit.microservice_hotel_service.dto.RoomDto;
@@ -23,7 +27,9 @@ import java.util.stream.Collectors;
 @Service
 public class HostServiceImpl implements HostService {
 
-  private HostRepository hostRepository;
+    private RoomRepository roomRepository;
+    private PropertyRepository propertyRepository;
+
     private static final Logger LOGGER= LoggerFactory.getLogger(HostService.class);
     private final ModelMapper mapper;
     private RestTemplate restTemplate;
@@ -38,7 +44,7 @@ public class HostServiceImpl implements HostService {
         newRoom.setBedCount(dto.getBedCount());
         newRoom.setStatus(dto.isStatus());
         try{
-            hostRepository.save(newRoom);
+            roomRepository.save(newRoom);
         } catch (Exception e){
             LOGGER.info(e.getCause().getMessage());
         }
@@ -47,7 +53,7 @@ public class HostServiceImpl implements HostService {
 
     @Override
     public RoomDto editRoom(EdiRoomDto dto, UUID id) {
-        Room editRoom = hostRepository.findById(id).get();
+        Room editRoom = roomRepository.findById(id).get();
         editRoom.setBedRoomCount(dto.getBedRoomCount());
         editRoom.setBathRoomCount(dto.getBathRoomCount());
         editRoom.setBedCount(dto.getBedCount());
@@ -55,7 +61,7 @@ public class HostServiceImpl implements HostService {
         editRoom.setPricePerNight(dto.getPricePerNight());
         editRoom.setStatus(dto.isStatus());
         try{
-            hostRepository.save(editRoom);
+            roomRepository.save(editRoom);
         } catch (Exception e){
             LOGGER.info(e.getCause().getMessage());
         }
@@ -68,10 +74,28 @@ public class HostServiceImpl implements HostService {
         return mapper.map(u,UserDto.class);
     }
 
+    @Override
+    public CreatePropertyDto addProperty(CreatePropertyDto dto) {
+        Property p=new Property();
+        p.setPropertyName(dto.getPropertyName());
+        p.setAddress(dto.getAddress());
+        p.setDescription(dto.getDescription());
+        p.setImages(dto.getImages());
+        try{
+            propertyRepository.save(p);
+        }
+       catch (Exception e){
+            LOGGER.info(e.getMessage());
+       }
+
+
+        return mapper.map(p,CreatePropertyDto.class);
+    }
+
 
     @Override
     public boolean deleteRoom(UUID ID) {
-        hostRepository.deleteById(ID);
+        roomRepository.deleteById(ID);
         return true;
     }
 
@@ -79,7 +103,7 @@ public class HostServiceImpl implements HostService {
 
         List<Room> rooms = new ArrayList<Room>();
 
-        hostRepository.findAll().forEach(room -> rooms.add(room));
+        roomRepository.findAll().forEach(room -> rooms.add(room));
 
         List<RoomDto> roomDtos = rooms
                 .stream()
@@ -90,6 +114,6 @@ public class HostServiceImpl implements HostService {
 
     //public RoomDto
     public RoomDto getRoomById(UUID id) {
-      return   mapper.map( hostRepository.findById(id).get(), RoomDto.class);
+      return   mapper.map( roomRepository.findById(id).get(), RoomDto.class);
     }
 }
