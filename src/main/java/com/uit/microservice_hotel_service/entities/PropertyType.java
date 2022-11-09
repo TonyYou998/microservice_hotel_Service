@@ -12,4 +12,12 @@ import javax.persistence.Entity;
 public class PropertyType extends BaseEntity {
     private String name;
     private String image;
+
+    public PropertyType(String name) {
+        this.name=name;
+    }
+
+    public PropertyType() {
+
+    }
 }

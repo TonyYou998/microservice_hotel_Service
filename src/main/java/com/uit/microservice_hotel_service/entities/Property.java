@@ -17,13 +17,14 @@ public class Property extends BaseEntity {
     private int cityId;
     private String address;
     private String latitude;
-    private String logitude;
+    private String longitude;
     private String description;
     private int propertyTypeId;
     private Double rating;
     private String images;
     private int totalRoom;
     private int availableRoom;
+//    floor-plan
     private int bedCount;
     private int bathRoomCount;
     private int guestCount;
