@@ -3,7 +3,9 @@ package com.uit.microservice_hotel_service.service;
 import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
 
 import com.uit.microservice_hotel_service.entities.Property;
+import com.uit.microservice_hotel_service.entities.PropertyType;
 import com.uit.microservice_hotel_service.repository.PropertyRepository;
+import com.uit.microservice_hotel_service.repository.PropertyTypeRepository;
 import com.uit.microservice_hotel_service.repository.RoomRepository;
 import com.uit.microservice_hotel_service.dto.CreateRoomDto;
 import com.uit.microservice_hotel_service.dto.EdiRoomDto;
@@ -29,6 +31,7 @@ public class HostServiceImpl implements HostService {
 
     private RoomRepository roomRepository;
     private PropertyRepository propertyRepository;
+    private PropertyTypeRepository propertyTypeRepository;
 
     private static final Logger LOGGER= LoggerFactory.getLogger(HostService.class);
     private final ModelMapper mapper;
@@ -77,18 +80,23 @@ public class HostServiceImpl implements HostService {
     @Override
     public CreatePropertyDto addProperty(CreatePropertyDto dto) {
         Property p=new Property();
-        p.setPropertyName(dto.getPropertyName());
-        p.setAddress(dto.getAddress());
-        p.setDescription(dto.getDescription());
-        p.setImages(dto.getImages());
         try{
-            propertyRepository.save(p);
+            PropertyType pT= propertyTypeRepository.findById(UUID.fromString(dto.getPropertyTypeId())).get();
+                p.setPropertyName(dto.getPropertyName());
+                p.setAddress(dto.getAddress());
+                p.setDescription(dto.getDescription());
+                p.setImages(dto.getImages());
+                p.setLongitude(dto.getLongitude());
+                p.setLatitude(dto.getLatitude());
+                p.setPrivacy(dto.getPrivacy());
+                p.setPropertyTypeId(pT);
+                propertyRepository.save(p);
+
         }
-       catch (Exception e){
+        catch (Exception e){
             LOGGER.info(e.getMessage());
-       }
 
-
+        }
         return mapper.map(p,CreatePropertyDto.class);
     }
 

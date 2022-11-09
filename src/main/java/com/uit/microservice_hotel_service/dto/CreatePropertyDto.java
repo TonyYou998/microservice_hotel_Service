@@ -10,17 +10,25 @@ import java.util.UUID;
 
 @Data
 public class CreatePropertyDto {
-    @NotEmpty
+//    @NotEmpty
     private String propertyName;
     @NotEmpty
     private String address;
-    @NotEmpty
+//    @NotEmpty
     private String description;
     @NotNull
-    private int propertyTypeId;
+    private String propertyTypeId;
     @NotEmpty
+    private String latitude;
+    @NotEmpty
+    private String longitude;
+//    @NotEmpty
     private String images;
-    private UUID id;
+    @NotEmpty
+    private String privacy;
+    private String country;
+    private String city;
+
 
 
 }

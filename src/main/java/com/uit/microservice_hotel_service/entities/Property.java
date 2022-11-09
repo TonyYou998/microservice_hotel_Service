@@ -4,7 +4,10 @@ import com.uit.user_service.entities.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.UUID;
 @Getter
@@ -19,7 +22,11 @@ public class Property extends BaseEntity {
     private String latitude;
     private String longitude;
     private String description;
-    private int propertyTypeId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="property_type_id")
+    private PropertyType propertyTypeId;
+    private String privacy;
     private Double rating;
     private String images;
     private int totalRoom;
