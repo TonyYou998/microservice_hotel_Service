@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class HostController {
     private final String ROLE_HEADER="Role";
+    private final String AUTHORIZATION_HEADER="Authorization";
     private final String UUID_HEADER="UUID";
     private HostService hostService;
     private static final Logger LOGGER= LoggerFactory.getLogger(HostController.class);
@@ -84,11 +86,15 @@ public class HostController {
    }
 
    @PostMapping(HostConstant.ADD_PROPERTY)
-   public Object addProperty(@RequestHeader(ROLE_HEADER) String role, @Valid @RequestBody CreatePropertyDto dto, BindingResult result){
+   public Object addProperty(@RequestHeader(ROLE_HEADER) String role,@RequestHeader(AUTHORIZATION_HEADER) String token, @Valid @RequestBody CreatePropertyDto dto, BindingResult result){
+    LOGGER.info(dto.toString());
         if(!role.equals("Host"))
             return ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
        if(result.hasErrors())
            return ResponseHandler.getResponse(result,HttpStatus.BAD_REQUEST);
-       return   ResponseHandler.getResponse(hostService.addProperty(dto),HttpStatus.OK);
+       CreatePropertyDto p=hostService.addProperty(dto,token);
+       if(p==null)
+           return ResponseHandler.getResponse("unable to create property",HttpStatus.BAD_REQUEST);
+       return   ResponseHandler.getResponse(p,HttpStatus.OK);
    }
 }

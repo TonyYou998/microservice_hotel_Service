@@ -1,8 +1,11 @@
 package com.uit.microservice_hotel_service.entities;
 
 import com.uit.user_service.entities.BaseEntity;
+import com.uit.user_service.entities.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -41,6 +44,8 @@ public class Property extends BaseEntity {
     private LocalDateTime endDate;
     private  Long totalReview;
     private int propertyAmenityId;
+    @Type(type = "uuid-char")
+    @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
     private UUID hostByUserId;
 
 

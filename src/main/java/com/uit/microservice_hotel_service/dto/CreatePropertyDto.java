@@ -28,6 +28,7 @@ public class CreatePropertyDto {
     private String privacy;
     private String country;
     private String city;
+    private UUID hostByUserId;
 
 
 

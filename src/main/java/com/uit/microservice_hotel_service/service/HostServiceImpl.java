@@ -78,10 +78,11 @@ public class HostServiceImpl implements HostService {
     }
 
     @Override
-    public CreatePropertyDto addProperty(CreatePropertyDto dto) {
+    public CreatePropertyDto addProperty(CreatePropertyDto dto, String token) {
         Property p=new Property();
         try{
-            PropertyType pT= propertyTypeRepository.findById(UUID.fromString(dto.getPropertyTypeId())).get();
+               UUID uid=  restTemplate.getForObject("http://user-service/api/v1/user/get-id?token="+token, UUID.class);
+                PropertyType pT= propertyTypeRepository.findById(UUID.fromString(dto.getPropertyTypeId())).get();
                 p.setPropertyName(dto.getPropertyName());
                 p.setAddress(dto.getAddress());
                 p.setDescription(dto.getDescription());
@@ -90,14 +91,15 @@ public class HostServiceImpl implements HostService {
                 p.setLatitude(dto.getLatitude());
                 p.setPrivacy(dto.getPrivacy());
                 p.setPropertyTypeId(pT);
+                p.setHostByUserId(uid);
                 propertyRepository.save(p);
-
+                return mapper.map(p,CreatePropertyDto.class);
         }
         catch (Exception e){
             LOGGER.info(e.getMessage());
-
+            return null;
         }
-        return mapper.map(p,CreatePropertyDto.class);
+
     }
 
 

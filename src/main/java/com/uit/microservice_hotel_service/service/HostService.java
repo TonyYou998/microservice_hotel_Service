@@ -19,5 +19,5 @@ public interface HostService {
 
     UserDto becomeAHost(String uuid);
 
-    CreatePropertyDto addProperty(CreatePropertyDto dto);
+    CreatePropertyDto addProperty(CreatePropertyDto dto, String token);
 }
