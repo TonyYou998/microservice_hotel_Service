@@ -34,6 +34,7 @@ public class Property extends BaseEntity {
     private String images;
     private int totalRoom;
     private int availableRoom;
+    private Double price;
 //    floor-plan
     private int bedCount;
     private int bathRoomCount;

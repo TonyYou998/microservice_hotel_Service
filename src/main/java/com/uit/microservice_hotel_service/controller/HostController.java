@@ -97,4 +97,13 @@ public class HostController {
            return ResponseHandler.getResponse("unable to create property",HttpStatus.BAD_REQUEST);
        return   ResponseHandler.getResponse(p,HttpStatus.OK);
    }
+   @GetMapping(HostConstant.GET_PROPERTY_TYPE)
+   public Object getPropertyType(@RequestHeader(ROLE_HEADER) String role){
+
+        if(!role.equals("Host"))
+            return  ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
+        return ResponseHandler.getResponse(hostService.getAllProperty(),HttpStatus.OK);
+
+
+   }
 }

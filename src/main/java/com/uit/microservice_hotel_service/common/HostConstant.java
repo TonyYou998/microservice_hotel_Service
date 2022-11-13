@@ -21,4 +21,5 @@ public class HostConstant extends BaseConstant {
     public static final String SERVICE_NAME ="host" ;
     public static final String ADD_PROPERTY = "/add-property";
 
+    public static final String GET_PROPERTY_TYPE ="/get-property-type" ;
 }

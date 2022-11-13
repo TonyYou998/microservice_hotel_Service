@@ -1,15 +1,12 @@
 package com.uit.microservice_hotel_service.service;
 
-import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
+import com.uit.microservice_hotel_service.dto.*;
 
 import com.uit.microservice_hotel_service.entities.Property;
 import com.uit.microservice_hotel_service.entities.PropertyType;
 import com.uit.microservice_hotel_service.repository.PropertyRepository;
 import com.uit.microservice_hotel_service.repository.PropertyTypeRepository;
 import com.uit.microservice_hotel_service.repository.RoomRepository;
-import com.uit.microservice_hotel_service.dto.CreateRoomDto;
-import com.uit.microservice_hotel_service.dto.EdiRoomDto;
-import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.entities.Room;
 import com.uit.user_service.dto.UserDto;
 import com.uit.user_service.entities.User;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -92,6 +90,7 @@ public class HostServiceImpl implements HostService {
                 p.setPrivacy(dto.getPrivacy());
                 p.setPropertyTypeId(pT);
                 p.setHostByUserId(uid);
+                p.setPrice(Double.parseDouble(dto.getPrice()));
                 propertyRepository.save(p);
                 return mapper.map(p,CreatePropertyDto.class);
         }
@@ -100,6 +99,17 @@ public class HostServiceImpl implements HostService {
             return null;
         }
 
+    }
+
+    @Override
+    public List<GetPropertyTypeDto> getAllProperty() {
+        List<PropertyType> lstPropertyTypes=propertyTypeRepository.findAll();
+        List<GetPropertyTypeDto> rtnLstPropertyType=new LinkedList<>();
+        for(PropertyType pT:lstPropertyTypes){
+            GetPropertyTypeDto mapPropertyType=mapper.map(pT, GetPropertyTypeDto.class);
+            rtnLstPropertyType.add(mapPropertyType);
+        }
+        return  rtnLstPropertyType;
     }
 
 

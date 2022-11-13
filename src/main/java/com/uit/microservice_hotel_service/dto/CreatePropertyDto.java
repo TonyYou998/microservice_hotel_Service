@@ -18,6 +18,8 @@ public class CreatePropertyDto {
     private String description;
     @NotNull
     private String propertyTypeId;
+    @NotNull
+    private String price;
     @NotEmpty
     private String latitude;
     @NotEmpty
