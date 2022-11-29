@@ -21,4 +21,6 @@ public interface HostService {
     CreatePropertyDto addProperty(CreatePropertyDto dto, String token);
 
     List<GetPropertyTypeDto> getAllProperty();
+
+    List<GetPropertyDto> getPropertyByHostId(String token);
 }

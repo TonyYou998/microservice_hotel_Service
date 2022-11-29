@@ -1,11 +1,8 @@
 package com.uit.microservice_hotel_service.controller;
 import com.uit.microservice_base_project.common.BaseConstant;
 import com.uit.microservice_base_project.config.ResponseHandler;
-import com.uit.microservice_hotel_service.dto.CreatePropertyDto;
-import com.uit.microservice_hotel_service.dto.CreateRoomDto;
+import com.uit.microservice_hotel_service.dto.*;
 import com.uit.microservice_hotel_service.common.HostConstant;
-import com.uit.microservice_hotel_service.dto.EdiRoomDto;
-import com.uit.microservice_hotel_service.dto.RoomDto;
 import com.uit.microservice_hotel_service.service.HostService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -72,11 +69,6 @@ public class HostController {
     }
 
 
-   @GetMapping(HostConstant.demo)
-   public Object demo(){
-        return "hotel Demo";
-   }
-
    @PostMapping(HostConstant.BECOME_A_HOST)
    public Object becomeAHost(@RequestHeader(ROLE_HEADER) String role,@RequestHeader(UUID_HEADER) String uuid){
         if(!role.equals("User")&& !uuid.equals(""))
@@ -103,7 +95,12 @@ public class HostController {
         if(!role.equals("Host"))
             return  ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
         return ResponseHandler.getResponse(hostService.getAllProperty(),HttpStatus.OK);
-
+   }
+   @GetMapping(HostConstant.GET_PROPERTY_BY_HOST_ID)
+   public Object getPropertyByHostId(@RequestHeader(ROLE_HEADER) String role,@RequestHeader(AUTHORIZATION_HEADER) String token){
+        if(!role.equals("Host"))
+                return ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
+        return ResponseHandler.getResponse(hostService.getPropertyByHostId(token),HttpStatus.OK);
 
    }
 }

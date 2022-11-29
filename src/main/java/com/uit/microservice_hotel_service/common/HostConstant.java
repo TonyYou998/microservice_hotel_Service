@@ -22,4 +22,5 @@ public class HostConstant extends BaseConstant {
     public static final String ADD_PROPERTY = "/add-property";
 
     public static final String GET_PROPERTY_TYPE ="/get-property-type" ;
+    public static final String GET_PROPERTY_BY_HOST_ID = "/get-property-by-host-id";
 }

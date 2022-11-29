@@ -47,7 +47,7 @@ public class Property extends BaseEntity {
     private int propertyAmenityId;
     @Type(type = "uuid-char")
     @GenericGenerator(name = "UUID",strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID hostByUserId;
+    private UUID hostUser;
 
 
 

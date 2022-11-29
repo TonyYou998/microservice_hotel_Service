@@ -89,7 +89,7 @@ public class HostServiceImpl implements HostService {
                 p.setLatitude(dto.getLatitude());
                 p.setPrivacy(dto.getPrivacy());
                 p.setPropertyTypeId(pT);
-                p.setHostByUserId(uid);
+                p.setHostUser(uid);
                 p.setPrice(Double.parseDouble(dto.getPrice()));
                 propertyRepository.save(p);
                 return mapper.map(p,CreatePropertyDto.class);
@@ -110,6 +110,25 @@ public class HostServiceImpl implements HostService {
             rtnLstPropertyType.add(mapPropertyType);
         }
         return  rtnLstPropertyType;
+    }
+
+    @Override
+    public List<GetPropertyDto> getPropertyByHostId(String token) {
+        List<GetPropertyDto> lstDto=new LinkedList<>();
+        GetPropertyDto dto;
+        try {
+            UUID uid=restTemplate.getForObject("http://user-service/api/v1/user/get-id?token="+token, UUID.class);
+            List<Property> lstProperty= propertyRepository.findByHostUser(uid);
+            for(Property p:lstProperty){
+               dto=  mapper.map(p,GetPropertyDto.class);
+               lstDto.add(dto);
+            }
+            return  lstDto;
+        }
+        catch(Exception e){
+            LOGGER.info(e.getMessage());
+            return null;
+        }
     }
 
 
