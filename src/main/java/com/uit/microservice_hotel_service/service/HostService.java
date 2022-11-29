@@ -23,4 +23,7 @@ public interface HostService {
     List<GetPropertyTypeDto> getAllProperty();
 
     List<GetPropertyDto> getPropertyByHostId(String token);
+
+
+    List<GetPropertyDto> getRecentProperty();
 }

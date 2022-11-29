@@ -103,4 +103,9 @@ public class HostController {
         return ResponseHandler.getResponse(hostService.getPropertyByHostId(token),HttpStatus.OK);
 
    }
+   @GetMapping(HostConstant.GET_RECENT_PROPERTY)
+   public Object getRecentProperty(){
+        return hostService.getRecentProperty();
+
+   }
 }

@@ -131,6 +131,17 @@ public class HostServiceImpl implements HostService {
         }
     }
 
+    @Override
+    public List<GetPropertyDto> getRecentProperty() {
+        List<Property>lstProperty= propertyRepository.findAll();
+        List<GetPropertyDto> lstDto=new LinkedList<>();
+        for(Property p:lstProperty){
+            GetPropertyDto dto= mapper.map(p,GetPropertyDto.class);
+            lstDto.add(dto);
+        }
+        return  lstDto;
+    }
+
 
     @Override
     public boolean deleteRoom(UUID ID) {
