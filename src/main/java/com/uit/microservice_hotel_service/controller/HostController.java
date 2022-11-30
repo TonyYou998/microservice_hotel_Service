@@ -89,7 +89,7 @@ public class HostController {
    }
 
    @PostMapping(HostConstant.ADD_PROPERTY)
-   public Object addProperty(@RequestHeader(ROLE_HEADER) String role, @RequestHeader(AUTHORIZATION_HEADER) String token, @RequestParam("model") String model, @RequestParam("file") MultipartFile file) throws IOException {
+   public Object addProperty(@RequestHeader(ROLE_HEADER) String role, @RequestHeader(AUTHORIZATION_HEADER) String token, @RequestParam("model") String model,@RequestParam("file") MultipartFile file) throws IOException {
 
     Gson gson=new Gson();
     CreatePropertyDto dto= gson.fromJson(model,CreatePropertyDto.class);
@@ -105,7 +105,7 @@ public class HostController {
        Path path=Paths.get(userDir+uploadDir+fileName);
        Files.write(path, file.getBytes());
        final String savedPath=domainName+fileName;
-       dto.setImages(savedPath);
+       dto.setImg(savedPath);
        CreatePropertyDto p=hostService.addProperty(dto,token);
 
        if(p==null)

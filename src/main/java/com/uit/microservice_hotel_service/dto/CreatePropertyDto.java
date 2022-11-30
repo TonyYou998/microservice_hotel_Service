@@ -2,6 +2,7 @@ package com.uit.microservice_hotel_service.dto;
 
 import lombok.Data;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -25,7 +26,7 @@ public class CreatePropertyDto {
     @NotEmpty
     private String longitude;
 //    @NotEmpty
-    private String images;
+    private String img;
     @NotEmpty
     private String privacy;
     private String country;

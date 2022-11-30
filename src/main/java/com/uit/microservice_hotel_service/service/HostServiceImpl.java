@@ -84,7 +84,7 @@ public class HostServiceImpl implements HostService {
                 p.setPropertyName(dto.getPropertyName());
                 p.setAddress(dto.getAddress());
                 p.setDescription(dto.getDescription());
-                p.setImages(dto.getImages());
+                p.setImages(dto.getImg());
                 p.setLongitude(dto.getLongitude());
                 p.setLatitude(dto.getLatitude());
                 p.setPrivacy(dto.getPrivacy());
