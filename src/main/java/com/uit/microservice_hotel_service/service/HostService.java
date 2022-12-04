@@ -26,4 +26,6 @@ public interface HostService {
 
 
     List<GetPropertyDto> getRecentProperty();
+
+    GetPropertyDto findPropertyById(String propertyId);
 }

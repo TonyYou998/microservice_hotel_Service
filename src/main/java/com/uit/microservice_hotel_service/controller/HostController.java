@@ -129,6 +129,10 @@ public class HostController {
    @GetMapping(HostConstant.GET_RECENT_PROPERTY)
    public Object getRecentProperty(){
         return hostService.getRecentProperty();
+   }
+   @GetMapping(HostConstant.GET_PROPERTY_BY_ID)
+    public GetPropertyDto getPropertyById(@PathVariable("propertyId") String propertyId){
+        return hostService.findPropertyById(propertyId);
 
    }
 }

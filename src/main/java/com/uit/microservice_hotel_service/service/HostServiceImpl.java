@@ -142,6 +142,13 @@ public class HostServiceImpl implements HostService {
         return  lstDto;
     }
 
+    @Override
+    public GetPropertyDto findPropertyById(String propertyId) {
+       Property p=propertyRepository.findById(UUID.fromString(propertyId)).get();
+         GetPropertyDto dto=mapper.map(p, GetPropertyDto.class);
+         return dto;
+    }
+
 
     @Override
     public boolean deleteRoom(UUID ID) {
