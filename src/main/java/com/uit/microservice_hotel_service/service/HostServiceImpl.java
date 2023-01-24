@@ -8,8 +8,8 @@ import com.uit.microservice_hotel_service.repository.PropertyRepository;
 import com.uit.microservice_hotel_service.repository.PropertyTypeRepository;
 import com.uit.microservice_hotel_service.repository.RoomRepository;
 import com.uit.microservice_hotel_service.entities.Room;
-import com.uit.user_service.dto.UserDto;
-import com.uit.user_service.entities.User;
+import dto.UserDto;
+import entities.User;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -151,6 +151,11 @@ public class HostServiceImpl implements HostService {
             dto.setHostUser(p.getHostUser().toString());
          return dto;
     }
+
+//    @Override
+//    public UUID findHostIdByPropertyId(UUID uuid) {
+//        return propertyRepository.findHostIdByPropertyId(uuid);
+//    }
 
 
     @Override

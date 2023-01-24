@@ -1,6 +1,7 @@
 package com.uit.microservice_hotel_service.common;
 
-import com.uit.microservice_base_project.common.BaseConstant;
+
+import common.BaseConstant;
 
 public class HostConstant extends BaseConstant {
 
@@ -25,4 +26,5 @@ public class HostConstant extends BaseConstant {
     public static final String GET_PROPERTY_BY_HOST_ID = "/get-property-by-host-id";
     public static final String GET_RECENT_PROPERTY = "/get-recent";
     public static final String GET_PROPERTY_BY_ID = "/get-property-by-id/{propertyId}";
+    public static final String GET_HOST_ID_BY_PROPERTY_ID = "/get-host-by-property-id/{propertyId}";
 }
