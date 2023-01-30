@@ -1,7 +1,4 @@
 package com.uit.microservice_hotel_service.entities;
-
-import com.uit.user_service.entities.BaseEntity;
-import com.uit.user_service.entities.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
