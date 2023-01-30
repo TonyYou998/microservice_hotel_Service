@@ -1,7 +1,6 @@
 package com.uit.microservice_hotel_service.service;
-
-import com.uit.microservice_hotel_service.dto.*;
-import dto.UserDto;
+import com.uit.microservice_hotel_service.entities.Property;
+import dto.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +24,8 @@ public interface HostService {
     List<GetPropertyDto> getRecentProperty();
 
     GetPropertyDto findPropertyById(String propertyId);
+
+    Property findHostUserById(UUID uuid);
 
 //    UUID findHostIdByPropertyId(UUID uuid);
 }

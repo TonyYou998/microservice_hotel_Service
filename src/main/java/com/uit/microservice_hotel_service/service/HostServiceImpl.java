@@ -1,14 +1,11 @@
 package com.uit.microservice_hotel_service.service;
-
-import com.uit.microservice_hotel_service.dto.*;
-
 import com.uit.microservice_hotel_service.entities.Property;
 import com.uit.microservice_hotel_service.entities.PropertyType;
 import com.uit.microservice_hotel_service.repository.PropertyRepository;
 import com.uit.microservice_hotel_service.repository.PropertyTypeRepository;
 import com.uit.microservice_hotel_service.repository.RoomRepository;
 import com.uit.microservice_hotel_service.entities.Room;
-import dto.UserDto;
+import dto.*;
 import entities.User;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -71,7 +68,7 @@ public class HostServiceImpl implements HostService {
 
     @Override
     public UserDto becomeAHost(String uuid) {
-        User u=restTemplate.getForObject("http://user-service/api/v1/user/changeRoleByUuid?uuid="+uuid,User.class);
+        User u=restTemplate.getForObject("http://user/api/v1/user/changeRoleByUuid?uuid="+uuid,User.class);
         return mapper.map(u,UserDto.class);
     }
 
@@ -79,7 +76,7 @@ public class HostServiceImpl implements HostService {
     public CreatePropertyDto addProperty(CreatePropertyDto dto, String token) {
         Property p=new Property();
         try{
-               UUID uid=  restTemplate.getForObject("http://user-service/api/v1/user/get-id?token="+token, UUID.class);
+               UUID uid=  restTemplate.getForObject("http://user/api/v1/user/get-id?token="+token, UUID.class);
                 PropertyType pT= propertyTypeRepository.findById(UUID.fromString(dto.getPropertyTypeId())).get();
                 p.setPropertyName(dto.getPropertyName());
                 p.setAddress(dto.getAddress());
@@ -117,7 +114,7 @@ public class HostServiceImpl implements HostService {
         List<GetPropertyDto> lstDto=new LinkedList<>();
         GetPropertyDto dto;
         try {
-            UUID uid=restTemplate.getForObject("http://user-service/api/v1/user/get-id?token="+token, UUID.class);
+            UUID uid=restTemplate.getForObject("http://user/api/v1/user/get-id?token="+token, UUID.class);
             List<Property> lstProperty= propertyRepository.findByHostUser(uid);
             for(Property p:lstProperty){
                dto=  mapper.map(p,GetPropertyDto.class);
@@ -150,6 +147,11 @@ public class HostServiceImpl implements HostService {
             dto.setPropertyType(p.getPropertyTypeId().getName());
             dto.setHostUser(p.getHostUser().toString());
          return dto;
+    }
+
+    @Override
+    public Property findHostUserById(UUID uuid) {
+        return propertyRepository.findHostUserById(uuid);
     }
 
 //    @Override

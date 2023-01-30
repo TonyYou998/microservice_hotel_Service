@@ -1,10 +1,12 @@
 package com.uit.microservice_hotel_service.controller;
 import com.google.gson.Gson;
-import com.uit.microservice_hotel_service.dto.*;
+
 import com.uit.microservice_hotel_service.common.HostConstant;
+import com.uit.microservice_hotel_service.entities.Property;
 import com.uit.microservice_hotel_service.service.HostService;
 import common.BaseConstant;
 import common.ResponseHandler;
+import dto.*;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -69,7 +71,7 @@ public class HostController {
 
 
     @PutMapping(HostConstant.edit_a_room)
-    public Object editRoom(@Valid @RequestBody EdiRoomDto dto,BindingResult result, @PathVariable("id") UUID id) {
+    public Object editRoom(@Valid @RequestBody EdiRoomDto dto, BindingResult result, @PathVariable("id") UUID id) {
         if(result.hasErrors()){
             return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
         }
@@ -106,7 +108,9 @@ public class HostController {
             return ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
         String fileName=file.getOriginalFilename();
         String userDir= Paths.get("").toAbsolutePath().toString();
+        LOGGER.info("userDir:"+userDir);
         Path folderPath=Paths.get(userDir+uploadDir);
+        LOGGER.info("uploadDir"+uploadDir);
        if(!Files.exists(folderPath))
            Files.createDirectories(folderPath);
        Path path=Paths.get(userDir+uploadDir+fileName);
@@ -144,9 +148,9 @@ public class HostController {
         return hostService.findPropertyById(propertyId);
 
    }
-//   @GetMapping(HostConstant.GET_HOST_ID_BY_PROPERTY_ID)
-//   public UUID getHostIdByPropertyId(@PathVariable("propertyId") String propertyId){
-//        return  hostService.findHostIdByPropertyId(UUID.fromString(propertyId));
-//
-//   }
+   @GetMapping(HostConstant.GET_HOST_ID_BY_PROPERTY_ID)
+   public UUID getHostIdByPropertyId(@PathVariable("propertyId") String propertyId){
+        return  hostService.findHostUserById(UUID.fromString(propertyId)).getHostUser();
+
+   }
 }

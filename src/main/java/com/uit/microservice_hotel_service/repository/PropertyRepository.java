@@ -13,5 +13,9 @@ public interface PropertyRepository extends JpaRepository<Property, UUID> {
 
     List<Property> findByHostUser(UUID uid);
 
+//    Property findHostUserById(UUID uuid);
+
+    Property findHostUserById(UUID uuid);
+
 //    UUID findHostIdByPropertyId(UUID uuid);
 }
