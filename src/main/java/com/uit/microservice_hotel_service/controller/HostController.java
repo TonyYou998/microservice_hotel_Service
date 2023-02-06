@@ -90,8 +90,10 @@ public class HostController {
 
    @PostMapping(HostConstant.BECOME_A_HOST)
    public Object becomeAHost(@RequestHeader(ROLE_HEADER) String role,@RequestHeader(UUID_HEADER) String uuid){
-        if(!role.equals("User")&& !uuid.equals(""))
+        if(uuid.equals(""))
             return ResponseHandler.getResponse(HttpStatus.UNAUTHORIZED);
+        else if(role.equals("Host"))
+            return ResponseHandler.getResponse(HttpStatus.NO_CONTENT);
         Object response= ResponseHandler.getResponse(hostService.becomeAHost(uuid));
         return new ResponseEntity<>(response,HttpStatus.OK);
 
